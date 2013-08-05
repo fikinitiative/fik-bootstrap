@@ -12,10 +12,10 @@
 		          </div>
 					
 					<nav class="clearfix">
-						<?php bones_footer_links(); // Adjust using Menus in Wordpress Admin ?>
+						<?php wp_nav_menu( array('menu' => 'footer_links', 'menu_class' => 'menu', 'theme_location' => 'footer_links', 'container_class' => 'footer-links clearfix') ); // Adjust using Menus in Wordpress Admin ?>
 					</nav>
 					
-					<p class="pull-right"><a href="http://320press.com" id="credit320" title="By the dudes of 320press">320press</a></p>
+					<p class="pull-right"><?php the_fikstores_badge(); ?></p>
 			
 					<p class="attribution">&copy; <?php bloginfo('name'); ?></p>
 				
@@ -31,6 +31,11 @@
 		<![endif]-->
 		
 		<?php wp_footer(); // js scripts are inserted using this function ?>
+		<?php $custom_js = get_theme_mod( 'fik_theme_js', '' );
+			if ($custom_js!=='') {
+    			echo ($custom_js); 
+			}
+		?>
 
 	</body>
 

@@ -10,8 +10,8 @@
 
 							<div class="hero-unit">
 							
-								<h1><?php _e("Epic 404 - Article Not Found","bonestheme"); ?></h1>
-								<p><?php _e("This is embarassing. We can't find what you were looking for.","bonestheme"); ?></p>
+								<h1><?php _e("Epic 404 - Article Not Found","fikstores"); ?></h1>
+								<p><?php _e("This is embarassing. We can't find what you were looking for.","fikstores"); ?></p>
 															
 							</div>
 													
@@ -19,7 +19,7 @@
 					
 						<section class="post_content">
 							
-							<p><?php _e("Whatever you were looking for was not found, but maybe try looking again or search using the form below.","bonestheme"); ?></p>
+							<p><?php _e("Whatever you were looking for was not found, but maybe try looking again or search using the form below.","fikstores"); ?></p>
 
 							<div class="row-fluid">
 								<div class="span12">

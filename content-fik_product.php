@@ -15,12 +15,10 @@
       </div>
       <?php endif; ?>
 
-    
-    
   </header> <!-- end article header -->
 
   <section class="post_content clearfix">
-    <?php the_content( __("Read more &raquo;","bonestheme") ); ?>
+    <?php the_content( __("Read more &raquo;","fikstores") ); ?>
   </section> <!-- end article section -->
 
 

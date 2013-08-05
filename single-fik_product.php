@@ -21,13 +21,13 @@
 
 						<footer>
 			
-							<?php the_tags('<p class="tags"><span class="tags-title">' . __("Tags","bonestheme") . ':</span> ', ' ', '</p>'); ?>
+							<?php the_tags('<p class="tags"><span class="tags-title">' . __("Tags","fikstores") . ':</span> ', ' ', '</p>'); ?>
 							
 							<?php 
 							// only show edit button if user has permission to edit posts
 							if( $user_level > 0 ) { 
 							?>
-							<a href="<?php echo get_edit_post_link(); ?>" class="btn btn-success edit-post"><i class="icon-pencil icon-white"></i> <?php _e("Edit post","bonestheme"); ?></a>
+							<a href="<?php echo get_edit_post_link(); ?>" class="btn btn-success edit-post"><i class="icon-pencil icon-white"></i> <?php _e("Edit post","fikstores"); ?></a>
 							<?php } ?>
 							
 						</footer> <!-- end article footer -->
@@ -37,7 +37,7 @@
 				<?php get_sidebar('product'); // product sidebar ?>
 
 				<footer>
-				    <p class="tags"><?php the_tags('<span class="tags-title">' . __("Tags","bonestheme") . ':</span> ', ' ', ''); ?></p>
+				    <p class="tags"><?php the_tags('<span class="tags-title">' . __("Tags","fikstores") . ':</span> ', ' ', ''); ?></p>
   				</footer> <!-- end article footer -->
 
 				<section role="navigation">
@@ -66,10 +66,10 @@
 					
 					<article id="post-not-found">
 					    <header>
-					    	<h1><?php _e("Not Found", "bonestheme"); ?></h1>
+					    	<h1><?php _e("Not Found", "fikstores"); ?></h1>
 					    </header>
 					    <section class="post_content">
-					    	<p><?php _e("Sorry, but the requested resource was not found on this site.", "bonestheme"); ?></p>
+					    	<p><?php _e("Sorry, but the requested resource was not found on this site.", "fikstores"); ?></p>
 					    </section>
 					    <footer>
 					    </footer>

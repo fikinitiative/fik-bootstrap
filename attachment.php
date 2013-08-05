@@ -12,7 +12,7 @@
 							
 							<div class="page-header"><h1 class="single-title" itemprop="headline"><?php the_title(); ?></h1></div>
 							
-							<p class="meta"><?php _e("Posted", "bonestheme"); ?> <time datetime="<?php echo the_time('Y-m-j'); ?>" pubdate><?php the_date(); ?></time> <?php _e("by", "bonestheme"); ?> <?php the_author_posts_link(); ?> <span class="amp">&</span> <?php _e("filed under", "bonestheme"); ?> <?php the_category(', '); ?>.</p>
+							<p class="meta"><?php _e("Posted", "fikstores"); ?> <time datetime="<?php echo the_time('Y-m-j'); ?>" pubdate><?php the_date(); ?></time> <?php _e("by", "fikstores"); ?> <?php the_author_posts_link(); ?> <span class="amp">&</span> <?php _e("filed under", "fikstores"); ?> <?php the_category(', '); ?>.</p>
 						
 						</header> <!-- end article header -->
 					
@@ -24,7 +24,7 @@
 						
 						<footer>
 			
-							<?php the_tags('<p class="tags"><span class="tags-title">' . __("Tags","bonestheme") . ':</span> ', ' ', '</p>'); ?>
+							<?php the_tags('<p class="tags"><span class="tags-title">' . __("Tags","fikstores") . ':</span> ', ' ', '</p>'); ?>
 							
 						</footer> <!-- end article footer -->
 					
@@ -38,10 +38,10 @@
 					
 					<article id="post-not-found">
 					    <header>
-					    	<h1><?php _e("Not Found","bonestheme"); ?></h1>
+					    	<h1><?php _e("Not Found","fikstores"); ?></h1>
 					    </header>
 					    <section class="post_content">
-					    	<p><?php _e("Sorry, but the requested resource was not found on this site.","bonestheme"); ?></p>
+					    	<p><?php _e("Sorry, but the requested resource was not found on this site.","fikstores"); ?></p>
 					    </section>
 					    <footer>
 					    </footer>

@@ -102,30 +102,12 @@ function bones_main_nav() {
     	)
     );
 }
-
-function bones_footer_links() { 
-	// display the wp3 menu if available
-    wp_nav_menu(
-    	array(
-    		'menu' => 'footer_links', /* menu name */
-    		'theme_location' => 'footer_links', /* where in the theme it's assigned */
-    		'container_class' => 'footer-links clearfix', /* container class */
-    		'fallback_cb' => 'bones_footer_links_fallback' /* menu fallback */
-    	)
-	);
-}
  
 // this is the fallback for header menu
 function bones_main_nav_fallback() { 
 	// Figure out how to make this output bootstrap-friendly html
 	//wp_page_menu( 'show_home=Home&menu_class=nav' ); 
 }
-
-// this is the fallback for footer menu
-function bones_footer_links_fallback() { 
-	/* you can put a default here if you like */ 
-}
-
 
 /****************** PLUGINS & EXTRA FEATURES **************************/
 	
