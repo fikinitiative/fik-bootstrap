@@ -1,12 +1,13 @@
-WP-BOOTSTRAP
+FIK STORES BOOTSTRAP
 ===================
 
-Bootstrap (http://twitter.github.io/bootstrap) in Wordpress theme form. Using Eddie Machado's Bones for a starting point (https://github.com/eddiemachado/bones). 
+This is a bootstrap base theme for Fik Stores (http://fikstores.com), use at your own risk :)
+
 
 FEATURES
 ________
 
-We’ve built the WP-Bootstrap theme so that it could be used as-is or as a starting point for theme developers. It’s built on top of the brilliant Bones theme framework by Eddie Machado and based on v2.3.1 of Bootstrap.
+We’ve built the Fik Stores  Bootstrap theme so that it could be used as-is or as a starting point for theme developers. It’s built on top of work from brilliant developers, see the credits section.
 
 Star this project on Github to keep up with its progress.
 
@@ -35,7 +36,7 @@ __________
 
 We’ve built in some shortcodes so you can easily add UI elements found in Twitter Bootstrap.
 
-Sidebars
+Credits
 ________
 
-We’ve built in two different sidebars. One for the homepage and one for the other pages. Add widgets to them.
+Bootstrap (http://twitter.github.io/bootstrap) in Wordpress theme form. Using Eddie Machado's Bones for a starting point (https://github.com/eddiemachado/bones). And WordPress Bootstrap from 320press project (http://320press.com/wpbs)

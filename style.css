@@ -1,10 +1,10 @@
 /*
-Theme Name: wp-bootstrap
-Theme URI: http://320press.com/wpbs
+Theme Name: Fik Stores Bootstrap
+Theme URI: https://github.com/fikinitiative/fik-bootstrap
 Description: A simple responsive theme based on the Bootstrap framework. Includes multiple page templates, two different sidebars and a theme options panel.
 Version: 2.3.1
-Author: 320press
-Author URI: http://320press.com
+Author: Fik Stores team
+Author URI: http://thefikinitiative.com
 Tags: black, white, one-column, two-columns, flexible-width, custom-background, custom-colors, custom-menu, full-width-template, theme-options
 License: GNU General Public License v2.0 & Apache License 2.0
 License URI: http://www.gnu.org/licenses/gpl-2.0.html http://www.apache.org/licenses/LICENSE-2.0
@@ -647,6 +647,18 @@ li.previous a:hover:before{
 
 blockquote.pull-left{
 	padding-right: 15px;
+}
+
+.price{
+	font-size: 18px;
+	line-height: 20px;
+	color:green;
+}
+
+.single .price{
+	font-size: 22px;
+	line-height: 24px;
+	color:green;
 }
 
 @media only screen and (min-width: 768px) {

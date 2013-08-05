@@ -1,30 +1,24 @@
 <?php get_header(); ?>
 			
 			<div id="content" class="clearfix row-fluid">
+				<div class="span12">
+                    <div class="entry-categories"><?php the_breadcrumb(true); // true if only one category or store section needed        ?></div>
+                </div>
+
+                 <div class="page-header span12"><h1 class="h2"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>" itemprop="name"><?php the_title(); ?></a></h1></div>
+
 			
 				<div id="main" class="span8 clearfix" role="main">
 
 					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 					
-					<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
-						
-						<header>
-						eeeeeeeeeeeeeeeee
-							<?php the_post_thumbnail( 'wpbs-featured' ); ?>
-							
-							<div class="page-header"><h1 class="single-title" itemprop="headline"><?php the_title(); ?></h1></div>
-							
-							<p class="meta"><?php _e("Posted", "bonestheme"); ?> <time datetime="<?php echo the_time('Y-m-j'); ?>" pubdate><?php the_date(); ?></time> <?php _e("by", "bonestheme"); ?> <?php the_author_posts_link(); ?> <span class="amp">&</span> <?php _e("filed under", "bonestheme"); ?> <?php the_category(', '); ?>.</p>
-						
-						</header> <!-- end article header -->
+					<article id="product-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article" itemscope itemtype="http://schema.org/Product" <?php post_class(); ?>>
 					
-						<section class="post_content clearfix" itemprop="articleBody">
-							<?php the_content(); ?>
-							
-							<?php wp_link_pages(); ?>
+						<section class="post_content clearfix">
+							<?php get_template_part('content', 'fik_product'); ?>
 					
 						</section> <!-- end article section -->
-						eeeeeeeeeeeeeeeeeeeeeee
+
 						<footer>
 			
 							<?php the_tags('<p class="tags"><span class="tags-title">' . __("Tags","bonestheme") . ':</span> ', ' ', '</p>'); ?>
@@ -39,12 +33,36 @@
 						</footer> <!-- end article footer -->
 					
 					</article> <!-- end article -->
+				</div> <!-- end #main -->
+				<?php get_sidebar('product'); // product sidebar ?>
+
+				<footer>
+				    <p class="tags"><?php the_tags('<span class="tags-title">' . __("Tags","bonestheme") . ':</span> ', ' ', ''); ?></p>
+  				</footer> <!-- end article footer -->
+
+				<section role="navigation">
+        			<div class="container">
+           				<div class="row">
+               				<div class="span12">
+                   				<ul class="pager">
+                       				<li class="previous">
+                            			<?php previous_post_link('%link', '<span class="meta-nav">' . _x('&larr;', 'Previous product link', 'twentytwelve') . '</span> %title'); ?>
+                        			</li>
+                        			<li class="next">
+                            			<?php next_post_link('%link', '%title <span class="meta-nav">' . _x('&rarr;', 'Next product link', 'twentytwelve') . '</span>'); ?>
+                        			</li>
+                    			</ul>
+                			</div>
+            			</div>
+        			</div>
+    			</section>
 					
-					<?php comments_template('',true); ?>
+				<?php //comments_template('',true); //No comments on products for now ?>
 					
-					<?php endwhile; ?>			
+				<?php endwhile; ?>			
 					
-					<?php else : ?>
+				<?php else : ?>
+					<div id="main" class="span8 clearfix" role="main">
 					
 					<article id="post-not-found">
 					    <header>
@@ -56,13 +74,11 @@
 					    <footer>
 					    </footer>
 					</article>
+
+					</div> <!-- end #main -->
 					
-					<?php endif; ?>
-			
-				</div> <!-- end #main -->
-    
-				<?php get_sidebar(); // sidebar 1 ?>
-    
+				<?php endif; ?>
+
 			</div> <!-- end #content -->
 
 <?php get_footer(); ?>

@@ -1,23 +1,27 @@
-<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
-  
+<article id="product-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
   <header>
-  
-    <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail( 'wpbs-featured' ); ?></a>
+   
+
+    <?php if (has_post_thumbnail()) : ?>
+      <div class="product-image">
+        <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('post-thumbnail'); ?></a>
+      </div>
+
+      <div class="product-gallery">
+        <?php // this function outputs a <ul> with class="product-image-thumbnails" where each <li> is a thumbnil that links to a bigger image (sizes specified in function). 
+              // We also pass the size of the zoom image which url and size are returned as data attributes of the img. The last 2 sizes are the max width of the video thumbnail and the max width of a video embed
+              the_product_gallery_thumbnails(array(64, 64), 'post-thumbnail', 'fikheader', 64, 620, FALSE);
+        ?>
+      </div>
+      <?php endif; ?>
+
     
-    <div class="page-header"><h1 class="h2"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h1></div>
     
-    <p class="meta"><?php _e("Posted", "bonestheme"); ?> <time datetime="<?php echo the_time('Y-m-j'); ?>" pubdate><?php the_date(); ?></time> <?php _e("by", "bonestheme"); ?> <?php the_author_posts_link(); ?> <span class="amp">&</span> <?php _e("filed under", "bonestheme"); ?> <?php the_category(', '); ?>.</p>
-  
   </header> <!-- end article header -->
 
   <section class="post_content clearfix">
     <?php the_content( __("Read more &raquo;","bonestheme") ); ?>
   </section> <!-- end article section -->
-  
-  <footer>
 
-    <p class="tags"><?php the_tags('<span class="tags-title">' . __("Tags","bonestheme") . ':</span> ', ' ', ''); ?></p>
-    
-  </footer> <!-- end article footer -->
 
 </article> <!-- end article -->
