@@ -35,6 +35,12 @@
 
 		<!-- typeahead plugin - if top nav search bar enabled -->
 		<?php require_once('library/typeahead.php'); ?>
+		<?php	
+		$custom_css = get_theme_mod( 'fik_theme_css', '' );
+			if ($custom_css!=='') {
+   				echo ('<style type="text/css" id="fik_custom_css">'.$custom_css.'</style>');
+			} 
+		?>
 				
 	</head>
 	
