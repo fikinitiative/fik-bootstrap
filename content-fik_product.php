@@ -1,3 +1,5 @@
+<?php if (is_single()) : // Only display product excerpt for home, archive page, store section and search           ?>
+
 <article id="product-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
   <header>
    
@@ -23,3 +25,24 @@
 
 
 </article> <!-- end article -->
+
+<?php else: ?>
+  <article id="product-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="product">
+  <header>
+    <h3 class="h2"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>" itemprop="name"><?php the_title(); ?></a></h3>
+    <?php if (has_post_thumbnail()) : ?>
+      <div class="product-image">
+        <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('post-thumbnail'); ?></a>
+      </div>
+    <?php endif; ?>
+
+  </header> <!-- end article header -->
+  <div class="price-and-purchase">
+                    <?php the_fik_price(); ?>
+</div>
+
+
+</article> <!-- end article -->
+
+
+<?php endif; ?>
