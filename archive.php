@@ -6,13 +6,21 @@
 				
 					<div class="page-header">
 					<?php if (is_category()) { ?>
-						<h1 class="archive_title h2">
-							<span><?php _e("Posts Categorized:", "fikstores"); ?></span> <?php single_cat_title(); ?>
-						</h1>
+						<h1 class="archive-title h2"><?php echo( '<span>' . single_cat_title( '', false ) . '</span>' ); ?></h1>
+						<?php 
+                     	// If the store section has an associated image, this function will print it. It accepts the image size as an argument:
+                        the_term_thumbnail(array(960,720)); ?>
+						<?php if ( category_description() ) : // Show an optional category description ?>
+							<div class="archive-meta"><?php echo category_description(); ?></div>
+						<?php endif; ?>
+
 					<?php } elseif (is_tag()) { ?> 
 						<h1 class="archive_title h2">
 							<span><?php _e("Posts Tagged:", "fikstores"); ?></span> <?php single_tag_title(); ?>
 						</h1>
+						<?php if ( tag_description() ) : // Show an optional tag description ?>
+							<div class="archive-meta"><?php echo tag_description(); ?></div>
+						<?php endif; ?>
 					<?php } elseif (is_author()) { ?>
 						<h1 class="archive_title h2">
 							<span><?php _e("Posts By:", "fikstores"); ?></span> <?php get_the_author_meta('display_name'); ?>
