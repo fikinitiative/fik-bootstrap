@@ -776,4 +776,17 @@ function get_wpbs_theme_options(){
       }
 } // end get_wpbs_theme_options function
 
+
+// Set default templates on theme activation:
+function fikactivationfunction($oldname, $oldtheme = false) {
+    // Set front page to fik 2012 home page
+    update_option('show_on_front', 'page');
+    update_option('page_on_front', get_option('fik_home_page_id'));
+    // Apply Store front page template
+    update_post_meta(get_option('fik_home_page_id'), '_wp_page_template', 'page-templates/store-front-page.php');
+    update_option('page_for_posts', get_option('fik_blog_page_id'));
+}
+
+add_action("after_switch_theme", "fikactivationfunction", 10, 2);
+
 ?>
