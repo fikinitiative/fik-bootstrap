@@ -783,7 +783,7 @@ function fikactivationfunction($oldname, $oldtheme = false) {
     update_option('show_on_front', 'page');
     update_option('page_on_front', get_option('fik_home_page_id'));
     // Apply Store front page template
-    update_post_meta(get_option('fik_home_page_id'), '_wp_page_template', 'page-templates/store-front-page.php');
+    update_post_meta(get_option('fik_home_page_id'), '_wp_page_template', 'store-front-page.php');
     update_option('page_for_posts', get_option('fik_blog_page_id'));
 }
 
