@@ -40,34 +40,18 @@
 					<ul class="products thumbnails">
 
 					<?php while (have_posts()) : the_post(); ?>
-					<li class="thumbnail span4">
-					<article id="product-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
-						
-						
-						<header>
-							
-							<h3 class="h2"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
-						
-						</header> <!-- end product header -->
-					
-						<section class="post_content">
-						
-							<?php //the_post_thumbnail( 'wpbs-featured' ); ?>
-							<div class="product-image">
-        						<a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('post-thumbnail'); ?></a>
-      						</div>
-						
-							<?php //the_excerpt(); ?>
-					
-						</section> <!-- end product section -->
-						<footer>
-                    		<?php the_fik_price(); ?>
+					<li id="product-<?php the_ID(); ?>" <?php post_class('span3 prod-thumb-span3-sq'); ?> role="product">
+  						<?php if (has_post_thumbnail()) : ?>
+  						<div class="product-img">
+    						<a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>" class="thumbnail"><?php the_post_thumbnail('post-thumbnail'); ?></a>
+  						</div>
+  						<?php endif; ?>
 
-						</footer> <!-- end product footer -->
-					
-					
-					</article> <!-- end product -->
-				</li>
+  						<dl class="product-info">
+    						<dt class="product-title"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>" itemprop="name"><?php the_title(); ?></a></dt>
+    						<dd class="product-price"><a class="pricetag" href="<?php the_permalink() ?>"><?php the_fik_price(); ?></a></dd>
+  						</dl>
+					</li>
 					
 					<?php endwhile; ?>	
 					

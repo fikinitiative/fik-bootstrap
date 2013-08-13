@@ -27,22 +27,20 @@
 </article> <!-- end article -->
 
 <?php else: ?>
-  <article id="product-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="product">
-  <header>
-    <h3 class="h2"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>" itemprop="name"><?php the_title(); ?></a></h3>
-    <?php if (has_post_thumbnail()) : ?>
-      <div class="product-image">
-        <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('post-thumbnail'); ?></a>
-      </div>
-    <?php endif; ?>
 
-  </header> <!-- end article header -->
-  <div class="price-and-purchase">
-                    <?php the_fik_price(); ?>
-</div>
+<li id="product-<?php the_ID(); ?>" <?php post_class('span3 prod-thumb-span3-sq'); ?> role="product">
+  <?php if (has_post_thumbnail()) : ?>
+  <div class="product-img">
+    <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>" class="thumbnail"><?php the_post_thumbnail('post-thumbnail'); ?></a>
+  </div>
+  <?php endif; ?>
 
-
-</article> <!-- end article -->
+  <dl class="product-info">
+    <dt class="product-title"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>" itemprop="name"><?php the_title(); ?></a></dt>
+    <dd class="product-price"><a class="pricetag" href="<?php the_permalink() ?>"><?php the_fik_price(); ?></a></dd>
+  </dl>
+</li>
+<!-- end item -->
 
 
 <?php endif; ?>
