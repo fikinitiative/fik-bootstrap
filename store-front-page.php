@@ -7,7 +7,10 @@
  * followed by the latest blog posts
  * 
  */
-get_header();
+get_header();?>
+<div id="content" class="clearfix row-fluid">
+    <div id="main" class="span12 clearfix" role="main">
+<?php
 
 // Now we prepare the loop for the products that are displayed in the front page
 $store_section = get_theme_mod('fik_home_section', '');
@@ -26,27 +29,13 @@ if ($store_section != ''){
 }
 
 ?>
-
-    <div id="primary" class="site-content">
-        <div id="content" class="container" role="main">
-            <div class="row">
+        <div class="row">
             <ul class="thumbnails text-center product-list">
-
             <?php while ( have_posts() ) : the_post(); ?>
-
                 <?php get_template_part( 'content', 'fik_product' ); ?>
-
             <?php endwhile; // end of the loop. ?>
             </ul>
-            </div>
-        </div><!-- #content -->
-    </div><!-- #primary -->
-
-
-
-
-
-
+        </div>
 <?php
 //if (get_option('show_on_front', true) == "page")
 // Now we prepare the loop for the posts that are displayed in the front page
@@ -69,12 +58,16 @@ if ($blog_category != ''){
 
 }
 
- while ( have_posts() ) : the_post(); 
-    get_template_part('content', 'fik_home_post');
-endwhile; // end of the loop. ?>
+if (have_posts()) : 
 
-
-
+    while (have_posts()) : the_post(); 
+        get_template_part('content', 'fik_home_post');
+    endwhile; // end of the loop. 
+    
+endif;
+?>
+    </div> <!-- end #main -->
 
 <?php get_sidebar( 'front' ); ?>
+</div> <!-- end #content -->
 <?php get_footer(); ?>
