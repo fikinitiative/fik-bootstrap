@@ -56,8 +56,6 @@
         <div class="collapse navbar-collapse">
         	<?php fik_bootstrap_menu('top_menu','nav navbar-nav'); ?>
 
-        	<?php fik_bootstrap_menu('top_menu','nav navbar-nav navbar-right'); ?>
-
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
     </div><!-- /.navbar -->
