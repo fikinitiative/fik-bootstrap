@@ -1,9 +1,9 @@
-<form action="<?php echo home_url( '/' ); ?>" method="get" class="form-stacked">
-    <fieldset>
-		<div class="clearfix">
-			<div class="input-append input-prepend">
-				<span class="add-on"><i class="icon-search"></i></span><input type="text" name="s" id="search" placeholder="<?php _e("Search","fikstores"); ?>" value="<?php the_search_query(); ?>" /><button type="submit" class="btn btn-primary"><?php _e("Search","fikstores"); ?></button>
-			</div>
-        </div>
-    </fieldset>
+<form action="<?php echo home_url( '/' ); ?>" method="get"  class=" form-search form-inline" role="form">
+  <fieldset>
+  <div class="form-group">
+    <label class="sr-only" for="search"><?php _e("Search","fikstores"); ?></label>
+    <input type="search" class="form-control" id="search" placeholder="<?php _e("Search","fikstores"); ?>" value="<?php the_search_query(); ?>" >
+  </div>
+  <button type="submit" class="btn btn-search"><?php _e("Search","fikstores"); ?></button>
+  </fieldset>
 </form>

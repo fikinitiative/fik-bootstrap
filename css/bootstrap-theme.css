@@ -1,32 +1,3 @@
-/*
-Theme Name: Fik Stores Bootstrap
-Theme URI: https://github.com/fikinitiative/fik-bootstrap
-Description: A simple responsive theme based on the Bootstrap framework. Includes multiple page templates, two different sidebars and a theme options panel.
-Version: 2.3.1
-Author: Fik Stores team
-Author URI: http://thefikinitiative.com
-Tags: black, white, one-column, two-columns, flexible-width, custom-background, custom-colors, custom-menu, full-width-template, theme-options
-License: GNU General Public License v2.0 & Apache License 2.0
-License URI: http://www.gnu.org/licenses/gpl-2.0.html http://www.apache.org/licenses/LICENSE-2.0
-*/
-
-/* micro clearfix: http://nicolasgallagher.com/micro-clearfix-hack/ */
-/* For modern browsers */
-.clearfix:before,
-.clearfix:after {
-    content:"";
-    display:table;
-}
-
-.clearfix:after {
-    clear:both;
-}
-
-/* For IE 6/7 (trigger hasLayout) */
-.clearfix {
-    zoom:1;
-}
-
 .btn-default,
 .btn-primary,
 .btn-success,
@@ -59,7 +30,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html http://www.apache.org/lice
   background-image: none;
 }
 
-.btn-default, .btn-search {
+.btn-default {
   text-shadow: 0 1px 0 #fff;
   background-image: -webkit-gradient(linear, left 0%, left 100%, from(#ffffff), to(#e6e6e6));
   background-image: -webkit-linear-gradient(top, #ffffff, 0%, #e6e6e6, 100%);
@@ -71,8 +42,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html http://www.apache.org/lice
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
 }
 
-.btn-search:active,
-.btn-search.active,
 .btn-default:active,
 .btn-default.active {
   background-color: #e6e6e6;

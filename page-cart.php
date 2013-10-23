@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 			
-			<div id="content" class="clearfix row-fluid">	
-				<div id="main" class="span8 clearfix" role="main">
+			<div id="content" class="row">	
+				<div id="main" class="col-md-8" role="main">
 
 				<?php while ( have_posts() ) : the_post(); ?>
 

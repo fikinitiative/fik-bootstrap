@@ -1,14 +1,14 @@
 <?php get_header(); ?>
 			
-			<div id="content" class="clearfix row-fluid">
+			<div id="content" class="row">
 			
-				<div id="main" class="span12 clearfix" role="main">
+				<div id="main" class="col-md-12" role="main">
 
-					<article id="post-not-found" class="clearfix">
+					<article id="post-not-found" >
 						
 						<header>
 
-							<div class="hero-unit">
+							<div class="jumbotron">
 							
 								<h1><?php _e("Yet Another 404 - Page Not Found","fikstores"); ?></h1>
 								<p><?php _e("This is embarassing. We can't find what you were looking for.","fikstores"); ?></p>
@@ -21,8 +21,8 @@
 							
 							<p><?php _e("Whatever you were looking for was not found, but maybe try looking again or search using the form below.","fikstores"); ?></p>
 
-							<div class="row-fluid">
-								<div class="span12">
+							<div class="row">
+								<div class="col-md-12">
 									<?php get_search_form(); ?>
 								</div>
 							</div>

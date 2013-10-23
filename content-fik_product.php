@@ -1,6 +1,6 @@
 <?php if (is_single()) : // Only display product excerpt for home, archive page, store section and search           ?>
 
-<article id="product-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
+<article id="product-<?php the_ID(); ?>" <?php post_class(''); ?> role="product">
   <header>
    
 
@@ -19,7 +19,7 @@
 
   </header> <!-- end article header -->
 
-  <section class="post_content clearfix">
+  <section class="post_content">
     <?php the_content( __("Read more &raquo;","fikstores") ); ?>
   </section> <!-- end article section -->
 
@@ -28,7 +28,7 @@
 
 <?php else: ?>
 
-<li id="product-<?php the_ID(); ?>" <?php post_class('span3 prod-thumb-span3-sq'); ?> role="product">
+<li id="product-<?php the_ID(); ?>" <?php post_class('col-md-3'); ?> role="product">
   <?php if (has_post_thumbnail()) : ?>
   <div class="product-img">
     <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>" class="thumbnail"><?php the_post_thumbnail('post-thumbnail'); ?></a>

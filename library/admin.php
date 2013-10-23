@@ -1,128 +1,86 @@
 <?php
-/* 
-This file handles the admin area and functions.
-You can use this file to make changes to the
-dashboard. Updates to this page are coming soon.
-It's turned off by default, but you can call it
-via the functions file.
+/* Welcome to Bones :)
+This is the core Bones file where most of the
+main functions & features reside. If you have 
+any custom functions, it's best to put them
+in the functions.php file.
 
 Developed by: Eddie Machado
 URL: http://themble.com/bones/
-
-Special Thanks for code & inspiration to:
-@jackmcconnell - http://www.voltronik.co.uk/
-Digging into WP - http://digwp.com/2010/10/customize-wordpress-dashboard/
-
 */
 
-/************* DASHBOARD WIDGETS *****************/
 
-// disable default dashboard widgets
-function disable_default_dashboard_widgets() {
-	// remove_meta_box('dashboard_right_now', 'dashboard', 'core');    // Right Now Widget
-	remove_meta_box('dashboard_recent_comments', 'dashboard', 'core'); // Comments Widget
-	remove_meta_box('dashboard_incoming_links', 'dashboard', 'core');  // Incoming Links Widget
-	remove_meta_box('dashboard_plugins', 'dashboard', 'core');         // Plugins Widget
 
-	// remove_meta_box('dashboard_quick_press', 'dashboard', 'core');  // Quick Press Widget
-	remove_meta_box('dashboard_recent_drafts', 'dashboard', 'core');   // Recent Drafts Widget
-	remove_meta_box('dashboard_primary', 'dashboard', 'core');         // 
-	remove_meta_box('dashboard_secondary', 'dashboard', 'core');       //
 	
-	// removing plugin dashboard boxes 
-	remove_meta_box('yoast_db_widget', 'dashboard', 'normal');         // Yoast's SEO Plugin Widget
+// loading jquery reply elements on single pages automatically
+function bones_queue_js(){ if (!is_admin()){ if ( is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) wp_enqueue_script( 'comment-reply' ); }
+}
+	// reply on comments script
+	add_action('wp_print_scripts', 'bones_queue_js');
+
+// Fixing the Read More in the Excerpts
+// This removes the annoying […] to a Read More link
+function bones_excerpt_more($more) {
+	global $post;
+	// edit here if you like
+	return '...  <a href="'. get_permalink($post->ID) . '" class="more-link" title="Read '.get_the_title($post->ID).'">Read more &raquo;</a>';
+}
+add_filter('excerpt_more', 'bones_excerpt_more');
 	
-	/* 
-	have more plugin widgets you'd like to remove? 
-	share them with us so we can get a list of 
-	the most commonly used. :D
-	https://github.com/eddiemachado/bones/issues
-	*/
+// Adding WP 3+ Functions & Theme Support
+function bones_theme_support() {
+	add_theme_support('post-thumbnails');      // wp thumbnails (sizes handled in functions.php)
+	set_post_thumbnail_size(125, 125, true);   // default thumb size
+	add_theme_support( 'custom-background' );  // wp custom background
+	add_theme_support('automatic-feed-links'); // rss thingy
+	// to add header image support go here: http://themble.com/support/adding-header-background-image-support/
+	// adding post format support
+	add_theme_support( 'post-formats',      // post formats
+		array( 
+			'aside',   // title less blurb
+			'gallery', // gallery of images
+			'link',    // quick link to other site
+			'image',   // an image
+			'audio',   // audio
+			'chat'     // chat transcript 
+		)
+	);	
+	add_theme_support( 'menus' );            // wp menus
+	register_nav_menus(                      // wp3+ menus
+		array( 
+			'main_nav' => 'The Main Menu',   // main nav in header
+			'footer_links' => 'Footer Links' // secondary nav in footer
+		)
+	);	
 }
 
-/*
-Now let's talk about adding your own custom Dashboard widget.
-Sometimes you want to show clients feeds relative to their 
-site's content. For example, the NBA.com feed for a sports
-site. Here is an example Dashboard Widget that displays recent
-entries from an RSS Feed.
-
-For more information on creating Dashboard Widgets, view:
-http://digwp.com/2010/10/customize-wordpress-dashboard/
-*/
-
-// RSS Dashboard Widget 
-function bones_rss_dashboard_widget() {
-	if(function_exists('fetch_feed')) {
-		include_once(ABSPATH . WPINC . '/feed.php');               // include the required file
-		$feed = fetch_feed('http://themble.com/feed/rss/');        // specify the source feed
-		$limit = $feed->get_item_quantity(7);                      // specify number of items
-		$items = $feed->get_items(0, $limit);                      // create an array of items
-	}
-	if ($limit == 0) echo '<div>The RSS Feed is either empty or unavailable.</div>';   // fallback message 
-	else foreach ($items as $item) : ?>
-
-	<h4 style="margin-bottom: 0;">
-		<a href="<?php echo $item->get_permalink(); ?>" title="<?php echo $item->get_date('j F Y @ g:i a'); ?>" target="_blank">
-			<?php echo $item->get_title(); ?>
-		</a>
-	</h4>
-	<p style="margin-top: 0.5em;">
-		<?php echo substr($item->get_description(), 0, 200); ?> 
-	</p>
-	<?php endforeach; 
-}
-
-// calling all custom dashboard widgets
-function bones_custom_dashboard_widgets() {
-	wp_add_dashboard_widget('bones_rss_dashboard_widget', 'Recently on Themble (Customize on admin.php)', 'bones_rss_dashboard_widget');
-	/*
-	Be sure to drop any other created Dashboard Widgets 
-	in this function and they will all load.
-	*/
+	// launching this stuff after theme setup
+	add_action('after_setup_theme','bones_theme_support');	
+	// adding sidebars to Wordpress (these are created in functions.php)
+	add_action( 'widgets_init', 'bones_register_sidebars' );
+	// adding the bones search form (created in functions.php)
+	add_filter( 'get_search_form', 'bones_wpsearch' );
+	
+function fik_bootstrap_menu($menu = 'top_menu', $classes = 'nav navbar-nav') {
+	wp_nav_menu( array(
+        'menu'       => $menu,
+        'depth'      => 2,
+        'container'  => false,
+        'menu_class' => $classes,
+        'fallback_cb' => 'wp_page_menu',
+        //Process nav menu using our custom nav walker
+        'walker' => new wp_bootstrap_navwalker())
+    );
 }
 
 
-// removing the dashboard widgets
-add_action('admin_menu', 'disable_default_dashboard_widgets');
-// adding any custom widgets
-add_action('wp_dashboard_setup', 'bones_custom_dashboard_widgets');
+/****************** PLUGINS & EXTRA FEATURES **************************/
 
-
-/************* CUSTOM LOGIN PAGE *****************/
-
-// calling your own login css so you can style it 
-function bones_login_css() {
-	/* i couldn't get wp_enqueue_style to work :( */
-	echo '<link rel="stylesheet" href="' . get_stylesheet_directory_uri() . '/library/css/login.css">';
+// remove the p from around imgs (http://css-tricks.com/snippets/wordpress/remove-paragraph-tags-from-around-images/)
+function filter_ptags_on_images($content){
+   return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
 }
 
-// changing the logo link from wordpress.org to your site 
-function bones_login_url() { echo bloginfo('url'); }
+add_filter('the_content', 'filter_ptags_on_images');
 
-// changing the alt text on the logo to show your site name 
-function bones_login_title() { echo get_option('blogname'); }
-
-// calling it only on the login page
-add_action('login_head', 'bones_login_css');
-add_filter('login_headerurl', 'bones_login_url');
-add_filter('login_headertitle', 'bones_login_title');
-
-
-/************* CUSTOMIZE ADMIN *******************/
-
-/*
-I don't really reccomend editing the admin too much
-as things may get funky if Wordpress updates. Here
-are a few funtions which you can choose to use if 
-you like.
-*/
-
-// Custom Backend Footer
-function bones_custom_admin_footer() {
-	echo '<span id="footer-thankyou">Developed by <a href="http://yoursite.com" target="_blank">Your Site Name</a></span>. Built using <a href="http://themble.com/bones" target="_blank">Bones</a>.';
-}
-
-// adding it to the admin area
-add_filter('admin_footer_text', 'bones_custom_admin_footer');
-
+?>

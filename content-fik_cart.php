@@ -1,4 +1,4 @@
-<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
+<article id="cart-page" <?php post_class(''); ?> role="article">
   
   <header>
   
@@ -8,7 +8,7 @@
       
   </header> <!-- end article header -->
 
-  <section class="cart_content clearfix">
+  <section class="cart_content">
     <?php the_fik_checkout(); ?>
   </section> <!-- end article section -->
   

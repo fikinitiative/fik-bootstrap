@@ -1,4 +1,4 @@
-			<div id="sidebar-product" class="fluid-sidebar sidebar span3" role="complementary">
+			<div id="sidebar-product" class="fluid-sidebar sidebar col-md-3" role="complementary">
 
 				 <div class="price-and-purchase">
                     <?php the_fik_price(); ?>

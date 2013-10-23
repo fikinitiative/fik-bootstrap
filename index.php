@@ -4,8 +4,8 @@
 				$blog_hero = of_get_option('blog_hero');
 				if ($blog_hero){
 			?>
-			<div class="clearfix row-fluid">
-				<div class="hero-unit">
+			<div class="row">
+				<div class="jumbotron">
 				
 					<h1><?php bloginfo('title'); ?></h1>
 					
@@ -17,26 +17,21 @@
 				}
 			?>
 			
-			<div id="content" class="clearfix row-fluid">
+			<div id="content" class="row">
 			
-				<div id="main" class="span8 clearfix" role="main">
+				<div id="main" class="col-md-8" role="main">
 
 					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 						<?php get_template_part( 'content', get_post_format() ); ?>					
 					<?php endwhile; ?>	
 					
-					<?php if (function_exists('page_navi')) { // if expirimental feature is active ?>
-						
-						<?php page_navi(); // use the page navi function ?>
-						
-					<?php } else { // if it is disabled, display regular wp prev & next links ?>
 						<nav class="wp-prev-next">
 							<ul class="clearfix">
 								<li class="prev-link"><?php next_posts_link(_e('&laquo; Older Entries', "fikstores")) ?></li>
 								<li class="next-link"><?php previous_posts_link(_e('Newer Entries &raquo;', "fikstores")) ?></li>
 							</ul>
 						</nav>
-					<?php } ?>		
+	
 					
 					<?php else : ?>
 					

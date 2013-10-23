@@ -34,25 +34,7 @@ function optionsframework_option_name() {
 
 function optionsframework_options() {
 
-	$themesPath = dirname(__FILE__) . '/admin/themes';
-	
-	// Insert default option
-	$theList['default'] = OPTIONS_FRAMEWORK_DIRECTORY . '/themes/default-thumbnail-100x60.png';
-	
-	if ($handle = opendir( $themesPath )) {
-	    while (false !== ($file = readdir($handle)))
-	    {
-	        if ($file != "." && $file != ".." && strtolower(substr($file, strrpos($file, '.') + 1)) == 'css')
-	        {
-	        	$name = substr($file, 0, strlen($file) - 4);
-				$thumb = OPTIONS_FRAMEWORK_DIRECTORY . '/themes/' . $name . '-thumbnail-100x60.png';
-				$theList[$name] = $thumb;
-	        }
-	    }
-	    closedir($handle);
-	}
-	
-	//print_r($theList);
+
 	
 	// fixed or scroll position
 	$fixed_scroll = array("fixed" => "Fixed","scroll" => "Scroll");
@@ -189,28 +171,7 @@ function optionsframework_options() {
 						"std" => "1",
 						"type" => "checkbox");
 						
-	$options[] = array( "name" => "Theme",
-						"type" => "heading");
-						
-	$options[] = array( "name" => "Bootswatch.com Themes",
-						"desc" => "Use theme from bootswatch.com. Note: This may override other styles set in the theme options panel.",
-						"id" => "showhidden_themes",
-						"std" => "0",
-						"type" => "checkbox");
-						
-	$options[] = array( "name" => "Select a theme",
-						"id" => "wpbs_theme",
-						"std" => "default",
-						"class" => "hidden",
-						"type" => "images",
-						"options" => $theList
-						);
-						
-	$options[] = array( "name" => "Refresh themes from Bootswatch",
-						"type" => "themecheck",
-						"id" => "themecheck"
-						);
-						
+
 	$options[] = array( "name" => "Other Settings",
 						"type" => "heading");
 

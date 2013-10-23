@@ -1,14 +1,14 @@
 <?php get_header(); ?>
 			
-			<div id="content" class="clearfix row-fluid">
-				<div class="span12">
+			<div id="content" class="row">
+				<div class="col-md-12">
                     <div class="entry-categories"><?php the_breadcrumb(true); // true if only one category or store section needed        ?></div>
                 </div>
 
-                 <div class="page-header span12"><h1 class="h2"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>" itemprop="name"><?php the_title(); ?></a></h1></div>
+                 <div class="page-header col-md-12"><h1 class="h2"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>" itemprop="name"><?php the_title(); ?></a></h1></div>
 
 			
-				<div id="main" class="span8 clearfix" role="main">
+				<div id="main" class="col-md-8" role="main">
 
 					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 					
@@ -27,7 +27,7 @@
 							// only show edit button if user has permission to edit posts
 							if( $user_level > 0 ) { 
 							?>
-							<a href="<?php echo get_edit_post_link(); ?>" class="btn btn-success edit-post"><i class="icon-pencil icon-white"></i> <?php _e("Edit post","fikstores"); ?></a>
+							<a href="<?php echo get_edit_post_link(); ?>" class="btn btn-success edit-post"><i class="glyphicon glyphicon-pencil glyphicon-white"></i> <?php _e("Edit post","fikstores"); ?></a>
 							<?php } ?>
 							
 						</footer> <!-- end article footer -->
@@ -43,7 +43,7 @@
 				<section role="navigation">
         			<div class="container">
            				<div class="row">
-               				<div class="span12">
+               				<div class="col-md-12">
                    				<ul class="pager">
                        				<li class="previous">
                             			<?php previous_post_link('%link', '<span class="meta-nav">' . _x('&larr;', 'Previous product link', 'twentytwelve') . '</span> %title'); ?>
@@ -62,7 +62,7 @@
 				<?php endwhile; ?>			
 					
 				<?php else : ?>
-					<div id="main" class="span8 clearfix" role="main">
+					<div id="main" class="col-md-8 clearfix" role="main">
 					
 					<article id="post-not-found">
 					    <header>

@@ -9,8 +9,7 @@ sidebars, comments, ect.
 */
 
 // Get Bones Core Up & Running!
-require_once('library/bones.php');            // core functions (don't remove)
-require_once('library/plugins.php');          // plugins & extra functions (optional)
+require_once('library/admin.php');            // core functions (don't remove)
 
 // Options panel
 require_once('library/options-panel.php');
@@ -18,48 +17,7 @@ require_once('library/options-panel.php');
 // Shortcodes
 require_once('library/shortcodes.php');
 
-// Admin Functions (commented out by default)
-// require_once('library/admin.php');         // custom admin functions
 
-// Set content width
-if ( ! isset( $content_width ) ) $content_width = 580;
-
-
-/**
- * Creates a nicely formatted and more specific title element text
- * for output in head of document, based on current view.
- *
- * @param string $title Default title text for current view.
- * @param string $sep   Optional separator.
- *
- * @return string Filtered title.
- *
- * @note may be called from http://example.com/wp-activate.php?key=xxx where the plugins are not loaded.
- */
-function bones_filter_title( $title, $sep ) {
-	global $paged, $page;
-
-	if ( is_feed() ) {
-		return $title;
-	}
-
-	// Add the site name.
-	$title .= get_bloginfo( 'name' );
-
-	// Add the site description for the home/front page.
-	$site_description = get_bloginfo( 'description', 'display' );
-	if ( $site_description && ( is_home() || is_front_page() ) ) {
-		$title = "$title $sep $site_description";
-	}
-
-	// Add a page number if necessary.
-	if ( $paged >= 2 || $page >= 2 ) {
-		$title = "$title $sep " . sprintf( __( 'Page %s', 'bonestheme' ), max( $paged, $page ) );
-	}
-
-	return $title;
-}
-add_filter( 'wp_title', 'bones_filter_title', 10, 2 );
 
 
 /************* THUMBNAIL SIZE OPTIONS *************/
@@ -67,7 +25,7 @@ add_filter( 'wp_title', 'bones_filter_title', 10, 2 );
 // Thumbnail sizes
 add_image_size( 'wpbs-featured', 638, 300, true );
 add_image_size( 'wpbs-featured-home', 970, 311, true);
-add_image_size( 'wpbs-featured-carousel', 970, 400, true);
+add_image_size( 'fik-bootstrap-featured-carousel', 970, 400, true);
 
 /* 
 to add more sizes, simply copy a line from above 
@@ -116,7 +74,7 @@ function bones_register_sidebars() {
     register_sidebar(array(
       'id' => 'footer1',
       'name' => 'Footer 1',
-      'before_widget' => '<div id="%1$s" class="widget span4 %2$s">',
+      'before_widget' => '<div id="%1$s" class="widget col-md-4 %2$s">',
       'after_widget' => '</div>',
       'before_title' => '<h4 class="widgettitle">',
       'after_title' => '</h4>',
@@ -125,7 +83,7 @@ function bones_register_sidebars() {
     register_sidebar(array(
       'id' => 'footer2',
       'name' => 'Footer 2',
-      'before_widget' => '<div id="%1$s" class="widget span4 %2$s">',
+      'before_widget' => '<div id="%1$s" class="widget col-md-4 %2$s">',
       'after_widget' => '</div>',
       'before_title' => '<h4 class="widgettitle">',
       'after_title' => '</h4>',
@@ -134,7 +92,7 @@ function bones_register_sidebars() {
     register_sidebar(array(
       'id' => 'footer3',
       'name' => 'Footer 3',
-      'before_widget' => '<div id="%1$s" class="widget span4 %2$s">',
+      'before_widget' => '<div id="%1$s" class="widget col-md-4 %2$s">',
       'after_widget' => '</div>',
       'before_title' => '<h4 class="widgettitle">',
       'after_title' => '</h4>',
@@ -164,8 +122,8 @@ function bones_comments($comment, $args, $depth) {
    $GLOBALS['comment'] = $comment; ?>
 	<li <?php comment_class(); ?>>
 		<article id="comment-<?php comment_ID(); ?>" class="clearfix">
-			<div class="comment-author vcard row-fluid clearfix">
-				<div class="avatar span3">
+			<div class="comment-author vcard row">
+				<div class="avatar col-md-3">
 					<?php echo get_avatar( $comment, $size='75' ); ?>
 				</div>
 				<div class="span9 comment-text">
@@ -194,7 +152,7 @@ function bones_comments($comment, $args, $depth) {
 function list_pings($comment, $args, $depth) {
        $GLOBALS['comment'] = $comment;
 ?>
-        <li id="comment-<?php comment_ID(); ?>"><i class="icon icon-share-alt"></i>&nbsp;<?php comment_author_link(); ?>
+        <li id="comment-<?php comment_ID(); ?>"><i class=".glyphicon .glyphicon-share-alt"></i>&nbsp;<?php comment_author_link(); ?>
 <?php 
 
 }
@@ -299,108 +257,6 @@ function remove_thumbnail_dimensions( $html ) {
     return $html;
 }
 
-// Add the Meta Box to the homepage template
-function add_homepage_meta_box() {  
-	global $post;
-
-	// Only add homepage meta box if template being used is the homepage template
-	// $post_id = isset($_GET['post']) ? $_GET['post'] : (isset($_POST['post_ID']) ? $_POST['post_ID'] : "");
-	$post_id = $post->ID;
-	$template_file = get_post_meta($post_id,'_wp_page_template',TRUE);
-
-	if ( $template_file == 'page-homepage.php' ){
-	    add_meta_box(  
-	        'homepage_meta_box', // $id  
-	        'Optional Homepage Tagline', // $title  
-	        'show_homepage_meta_box', // $callback  
-	        'page', // $page  
-	        'normal', // $context  
-	        'high'); // $priority  
-    }
-}
-
-add_action( 'add_meta_boxes', 'add_homepage_meta_box' );
-
-// Field Array  
-$prefix = 'custom_';  
-$custom_meta_fields = array(  
-    array(  
-        'label'=> 'Homepage tagline area',  
-        'desc'  => 'Displayed underneath page title. Only used on homepage template. HTML can be used.',  
-        'id'    => $prefix.'tagline',  
-        'type'  => 'textarea' 
-    )  
-);  
-
-// The Homepage Meta Box Callback  
-function show_homepage_meta_box() {  
-  global $custom_meta_fields, $post;
-
-  // Use nonce for verification
-  wp_nonce_field( basename( __FILE__ ), 'wpbs_nonce' );
-    
-  // Begin the field table and loop
-  echo '<table class="form-table">';
-
-  foreach ( $custom_meta_fields as $field ) {
-      // get value of this field if it exists for this post  
-      $meta = get_post_meta($post->ID, $field['id'], true);  
-      // begin a table row with  
-      echo '<tr> 
-              <th><label for="'.$field['id'].'">'.$field['label'].'</label></th> 
-              <td>';  
-              switch($field['type']) {  
-                  // text  
-                  case 'text':  
-                      echo '<input type="text" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="60" /> 
-                          <br /><span class="description">'.$field['desc'].'</span>';  
-                  break;
-                  
-                  // textarea  
-                  case 'textarea':  
-                      echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="80" rows="4">'.$meta.'</textarea> 
-                          <br /><span class="description">'.$field['desc'].'</span>';  
-                  break;  
-              } //end switch  
-      echo '</td></tr>';  
-  } // end foreach  
-  echo '</table>'; // end table  
-}  
-
-// Save the Data  
-function save_homepage_meta( $post_id ) {  
-
-    global $custom_meta_fields;  
-  
-    // verify nonce  
-    if ( !isset( $_POST['wpbs_nonce'] ) || !wp_verify_nonce($_POST['wpbs_nonce'], basename(__FILE__)) )  
-        return $post_id;
-
-    // check autosave
-    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
-        return $post_id;
-
-    // check permissions
-    if ( 'page' == $_POST['post_type'] ) {
-        if ( !current_user_can( 'edit_page', $post_id ) )
-            return $post_id;
-        } elseif ( !current_user_can( 'edit_post', $post_id ) ) {
-            return $post_id;
-    }
-  
-    // loop through fields and save the data  
-    foreach ( $custom_meta_fields as $field ) {
-        $old = get_post_meta( $post_id, $field['id'], true );
-        $new = $_POST[$field['id']];
-
-        if ($new && $new != $old) {
-            update_post_meta( $post_id, $field['id'], $new );
-        } elseif ( '' == $new && $old ) {
-            delete_post_meta( $post_id, $field['id'], $old );
-        }
-    } // end foreach
-}
-add_action( 'save_post', 'save_homepage_meta' );
 
 // Add thumbnail class to thumbnail links
 function add_class_attachment_link( $html ) {
@@ -410,143 +266,154 @@ function add_class_attachment_link( $html ) {
 }
 add_filter( 'wp_get_attachment_link', 'add_class_attachment_link', 10, 1 );
 
-// Add lead class to first paragraph
-function first_paragraph( $content ){
-    global $post;
 
-    // if we're on the homepage, don't add the lead class to the first paragraph of text
-    if( is_page_template( 'page-homepage.php' ) )
-        return $content;
-    else
-        return preg_replace('/<p([^>]+)?>/', '<p$1 class="lead">', $content, 1);
+
+/**
+ * Class Name: wp_bootstrap_navwalker
+ * GitHub URI: https://github.com/twittem/wp-bootstrap-navwalker
+ * Description: A custom WordPress nav walker class to implement the Twitter Bootstrap 2.3.2 navigation style in a custom theme using the WordPress built in menu manager.
+ * Version: 1.4.3
+ * Author: Edward McIntyre - @twittem
+ * License: GPL-2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ */
+
+class wp_bootstrap_navwalker extends Walker_Nav_Menu {
+
+  /**
+   * @see Walker::start_lvl()
+   * @since 3.0.0
+   *
+   * @param string $output Passed by reference. Used to append additional content.
+   * @param int $depth Depth of page. Used for padding.
+   */
+  function start_lvl( &$output, $depth ) {
+    $indent = str_repeat( "\t", $depth );
+    $output    .= "\n$indent<ul class=\"dropdown-menu\">\n";    
+  }
+
+  /**
+   * @see Walker::start_el()
+   * @since 3.0.0
+   *
+   * @param string $output Passed by reference. Used to append additional content.
+   * @param object $item Menu item data object.
+   * @param int $depth Depth of menu item. Used for padding.
+   * @param int $current_page Menu item ID.
+   * @param object $args
+   */
+
+  function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+    global $wp_query;
+    $indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+
+    /**
+     * Dividers & Headers
+       * ==================
+     * Determine whether the item is a Divider, Header, or regular menu item.
+     * To prevent errors we use the strcasecmp() function to so a comparison
+     * that is not case sensitive. The strcasecmp() function returns a 0 if 
+     * the strings are equal.
+     */
+    if (strcasecmp($item->title, 'divider') == 0) {
+      // Item is a Divider
+      $output .= $indent . '<li class="divider">';
+    } else if (strcasecmp($item->title, 'divider-vertical') == 0) {
+      // Item is a Vertical Divider
+      $output .= $indent . '<li class="divider-vertical">';
+    } else if (strcasecmp($item->title, 'nav-header') == 0) /* this is contingency for backward compatibility - TOBEREMOVED  */ {
+      // Item is a Header
+      $output .= $indent . '<li class="dropdown-header">' . esc_attr( $item->attr_title );
+    } else if (strcasecmp($item->title, 'dropdown-header') == 0) /* new dropdown header markup in BS3  */ {
+      // Item is a Header
+      $output .= $indent . '<li class="dropdown-header">' . esc_attr( $item->attr_title );
+    } else {
+
+      $class_names = $value = '';
+      $classes = empty( $item->classes ) ? array() : (array) $item->classes;
+      $classes[] = ($item->current) ? 'active' : '';
+      $classes[] = 'menu-item-' . $item->ID;
+      $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
+
+      if ($args->has_children && $depth > 0) {
+        $class_names .= ' dropdown-submenu';
+      } else if($args->has_children && $depth === 0) {
+        $class_names .= ' dropdown';
+      }
+
+      $class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+
+      $id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args );
+      $id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+
+      $output .= $indent . '<li' . $id . $value . $class_names .'>';
+
+      $attributes = ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
+      $attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
+      $attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
+      $attributes .= ($args->has_children)      ? ' data-toggle="dropdown" data-target="#" class="dropdown-toggle"' : '';
+
+      $item_output = $args->before;
+
+      /**
+       * Glyphicons
+       * ===========
+       * Since the the menu item is NOT a Divider or Header we check the see
+       * if there is a value in the attr_title property. If the attr_title
+       * property is NOT null we apply it as the class name for the glyphicon.
+       */
+      if(! empty( $item->attr_title )){
+        $item_output .= '<a'. $attributes .'><i class="' . esc_attr( $item->attr_title ) . '"></i>&nbsp;';
+      } else {
+        $item_output .= '<a'. $attributes .'>';
+      }
+
+      $item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+      $item_output .= ($args->has_children && $depth == 0) ? ' <span class="caret"></span></a>' : '</a>';
+      $item_output .= $args->after;
+
+      $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+    }
+  }
+
+  /**
+   * Traverse elements to create list from elements.
+   *
+   * Display one element if the element doesn't have any children otherwise,
+   * display the element and its children. Will only traverse up to the max
+   * depth and no ignore elements under that depth. 
+   *
+   * This method shouldn't be called directly, use the walk() method instead.
+   *
+   * @see Walker::start_el()
+   * @since 2.5.0
+   *
+   * @param object $element Data object
+   * @param array $children_elements List of elements to continue traversing.
+   * @param int $max_depth Max depth to traverse.
+   * @param int $depth Depth of current element.
+   * @param array $args
+   * @param string $output Passed by reference. Used to append additional content.
+   * @return null Null on failure with no changes to parameters.
+   */
+
+  function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
+        if ( !$element ) {
+            return;
+        }
+
+        $id_field = $this->db_fields['id'];
+
+        //display this element
+        if ( is_object( $args[0] ) ) {
+           $args[0]->has_children = ! empty( $children_elements[$element->$id_field] );
+        }
+
+        parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
+    }
 }
-add_filter( 'the_content', 'first_paragraph' );
 
-// Menu output mods
-/* Bootstrap_Walker for Wordpress 
-     * Author: George Huger, Illuminati Karate, Inc 
-     * More Info: http://illuminatikarate.com/blog/bootstrap-walker-for-wordpress 
-     * 
-     * Formats a Wordpress menu to be used as a Bootstrap dropdown menu (http://getbootstrap.com). 
-     * 
-     * Specifically, it makes these changes to the normal Wordpress menu output to support Bootstrap: 
-     * 
-     *        - adds a 'dropdown' class to level-0 <li>'s which contain a dropdown 
-     *         - adds a 'dropdown-submenu' class to level-1 <li>'s which contain a dropdown 
-     *         - adds the 'dropdown-menu' class to level-1 and level-2 <ul>'s 
-     * 
-     * Supports menus up to 3 levels deep. 
-     *  
-     */ 
-    class Bootstrap_Walker extends Walker_Nav_Menu 
-    {     
- 
-        /* Start of the <ul> 
-         * 
-         * Note on $depth: Counterintuitively, $depth here means the "depth right before we start this menu".  
-         *                   So basically add one to what you'd expect it to be 
-         */         
-        function start_lvl(&$output, $depth) 
-        {
-            $tabs = str_repeat("\t", $depth); 
-            // If we are about to start the first submenu, we need to give it a dropdown-menu class 
-            if ($depth == 0 || $depth == 1) { //really, level-1 or level-2, because $depth is misleading here (see note above) 
-                $output .= "\n{$tabs}<ul class=\"dropdown-menu\">\n"; 
-            } else { 
-                $output .= "\n{$tabs}<ul>\n"; 
-            } 
-            return;
-        } 
- 
-        /* End of the <ul> 
-         * 
-         * Note on $depth: Counterintuitively, $depth here means the "depth right before we start this menu".  
-         *                   So basically add one to what you'd expect it to be 
-         */         
-        function end_lvl(&$output, $depth)  
-        {
-            if ($depth == 0) { // This is actually the end of the level-1 submenu ($depth is misleading here too!) 
- 
-                // we don't have anything special for Bootstrap, so we'll just leave an HTML comment for now 
-                $output .= '<!--.dropdown-->'; 
-            } 
-            $tabs = str_repeat("\t", $depth); 
-            $output .= "\n{$tabs}</ul>\n"; 
-            return; 
-        }
- 
-        /* Output the <li> and the containing <a> 
-         * Note: $depth is "correct" at this level 
-         */         
-        function start_el(&$output, $item, $depth, $args)  
-        {    
-            global $wp_query; 
-            $indent = ( $depth ) ? str_repeat( "\t", $depth ) : ''; 
-            $class_names = $value = ''; 
-            $classes = empty( $item->classes ) ? array() : (array) $item->classes; 
- 
-            /* If this item has a dropdown menu, add the 'dropdown' class for Bootstrap */ 
-            if ($item->hasChildren) { 
-                $classes[] = 'dropdown'; 
-                // level-1 menus also need the 'dropdown-submenu' class 
-                if($depth == 1) { 
-                    $classes[] = 'dropdown-submenu'; 
-                } 
-            } 
- 
-            /* This is the stock Wordpress code that builds the <li> with all of its attributes */ 
-            $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item ) ); 
-            $class_names = ' class="' . esc_attr( $class_names ) . '"'; 
-            $output .= $indent . '<li id="menu-item-'. $item->ID . '"' . $value . $class_names .'>';             
-            $attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->attr_title ) .'"' : ''; 
-            $attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : ''; 
-            $attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : ''; 
-            $attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : ''; 
-            $item_output = $args->before; 
- 
-            /* If this item has a dropdown menu, make clicking on this link toggle it */ 
-            if ($item->hasChildren && $depth == 0) { 
-                $item_output .= '<a'. $attributes .' class="dropdown-toggle" data-toggle="dropdown">'; 
-            } else { 
-                $item_output .= '<a'. $attributes .'>'; 
-            } 
- 
-            $item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after; 
- 
-            /* Output the actual caret for the user to click on to toggle the menu */             
-            if ($item->hasChildren && $depth == 0) { 
-                $item_output .= '<b class="caret"></b></a>'; 
-            } else { 
-                $item_output .= '</a>'; 
-            } 
- 
-            $item_output .= $args->after; 
-            $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args ); 
-            return; 
-        }
- 
-        /* Close the <li> 
-         * Note: the <a> is already closed 
-         * Note 2: $depth is "correct" at this level 
-         */         
-        function end_el (&$output, $item, $depth, $args)
-        {
-            $output .= '</li>'; 
-            return;
-        } 
- 
-        /* Add a 'hasChildren' property to the item 
-         * Code from: http://wordpress.org/support/topic/how-do-i-know-if-a-menu-item-has-children-or-is-a-leaf#post-3139633  
-         */ 
-        function display_element ($element, &$children_elements, $max_depth, $depth = 0, $args, &$output) 
-        { 
-            // check whether this item has children, and set $item->hasChildren accordingly 
-            $element->hasChildren = isset($children_elements[$element->ID]) && !empty($children_elements[$element->ID]); 
- 
-            // continue with normal behavior 
-            return parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output); 
-        }         
-    } 
+
 add_editor_style('editor-style.css');
 
 // Add Twitter Bootstrap's standard 'active' class name to the active nav link item
@@ -560,47 +427,6 @@ function add_active_class($classes, $item) {
   return $classes;
 }
 
-// enqueue styles
-if( !function_exists("theme_styles") ) {  
-    function theme_styles() { 
-        // This is the compiled css file from LESS - this means you compile the LESS file locally and put it in the appropriate directory if you want to make any changes to the master bootstrap.css.
-        wp_register_style( 'bootstrap', get_template_directory_uri() . '/library/css/bootstrap.css', array(), '1.0', 'all' );
-        wp_register_style( 'bootstrap-responsive', get_template_directory_uri() . '/library/css/responsive.css', array(), '1.0', 'all' );
-        wp_register_style( 'wp-bootstrap', get_stylesheet_uri(), array(), '1.0', 'all' );
-        
-        wp_enqueue_style( 'bootstrap' );
-        wp_enqueue_style( 'bootstrap-responsive' );
-        wp_enqueue_style( 'wp-bootstrap');
-    }
-}
-add_action( 'wp_enqueue_scripts', 'theme_styles' );
-
-// enqueue javascript
-if( !function_exists( "theme_js" ) ) {  
-  function theme_js(){
-  
-    wp_register_script( 'bootstrap', 
-      get_template_directory_uri() . '/library/js/bootstrap.min.js', 
-      array('jquery'), 
-      '1.2' );
-  
-    wp_register_script( 'wpbs-scripts', 
-      get_template_directory_uri() . '/library/js/scripts.js', 
-      array('jquery'), 
-      '1.2' );
-  
-    wp_register_script(  'modernizr', 
-      get_template_directory_uri() . '/library/js/modernizr.full.min.js', 
-      array('jquery'), 
-      '1.2' );
-  
-    wp_enqueue_script('bootstrap');
-    wp_enqueue_script('wpbs-scripts');
-    wp_enqueue_script('modernizr');
-    
-  }
-}
-add_action( 'wp_enqueue_scripts', 'theme_js' );
 
 // Get theme options
 function get_wpbs_theme_options(){
@@ -767,9 +593,27 @@ function get_wpbs_theme_options(){
       }
 } // end get_wpbs_theme_options function
 
+// enqueue javascript
+if( !function_exists( "theme_js" ) ) {  
+
+  function theme_js(){
+  
+    wp_register_script( 'bootstrap', 
+      get_template_directory_uri() . '/js/bootstrap.min.js', 
+      array('jquery'), 
+      '1.2' );
+  
+
+  
+    wp_enqueue_script('bootstrap');
+    
+  }
+}
+add_action( 'wp_enqueue_scripts', 'theme_js' );
+
 
 // Set default templates on theme activation:
-function fikactivationfunction($oldname, $oldtheme = false) {
+function fik_theme_activationfunction($oldname, $oldtheme = false) {
     // Set front page to fik 2012 home page
     update_option('show_on_front', 'page');
     update_option('page_on_front', get_option('fik_home_page_id'));
@@ -778,6 +622,6 @@ function fikactivationfunction($oldname, $oldtheme = false) {
     update_option('page_for_posts', get_option('fik_blog_page_id'));
 }
 
-add_action("after_switch_theme", "fikactivationfunction", 10, 2);
+add_action("after_switch_theme", "fik_theme_activationfunction", 10, 2);
 
 ?>
