@@ -61,16 +61,22 @@ function bones_theme_support() {
 	// adding the bones search form (created in functions.php)
 	add_filter( 'get_search_form', 'bones_wpsearch' );
 	
-function fik_bootstrap_menu($menu = 'top_menu', $classes = 'nav navbar-nav') {
-	wp_nav_menu( array(
-        'menu'       => $menu,
-        'depth'      => 2,
-        'container'  => false,
-        'menu_class' => $classes,
-        'fallback_cb' => 'wp_page_menu',
-        //Process nav menu using our custom nav walker
-        'walker' => new wp_bootstrap_navwalker())
-    );
+function fik_bootstrap_menu($args) {
+
+	$defaults = array(
+		'menu'              => 'main_nav',
+		'theme_location'    => 'primary',
+		'depth'             => 2,
+		'container'         => 'div',
+		'container_class'   => 'collapse navbar-collapse navbar-ex1-collapse',
+		'menu_class'        => 'nav navbar-nav',
+		'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
+		'walker'            => new wp_bootstrap_navwalker()
+	);
+
+	$args = wp_parse_args( $args, $defaults);
+	wp_nav_menu( $args );
+
 }
 
 
